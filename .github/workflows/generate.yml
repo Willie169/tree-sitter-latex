@@ -34,6 +34,7 @@ jobs:
              git rev-parse HEAD > ../commit
           fi
           rm -rf .git
+          rm .gitignore
           tree-sitter generate --abi 15 src/grammar.json
           cd ..
       - name: Commit and push changes
