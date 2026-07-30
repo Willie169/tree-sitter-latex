@@ -15,15 +15,15 @@ The generated `src/parser.c` is therefore committed to this repository so that n
 If you are using [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter) in Termux on Android, register this repository as the latex parser:
 ```
 if vim.fn.has("android") == 1 then
-	vim.api.nvim_create_autocmd("User", {
-		pattern = "TSUpdate",
-		callback = function()
-			require("nvim-treesitter.parsers").latex.install_info = {
-				generate = false,
-				url = "https://github.com/Willie169/tree-sitter-latex",
-				location = "tree-sitter-latex",
-			}
-		end,
+    vim.api.nvim_create_autocmd("User", {
+        pattern = "TSUpdate",
+        callback = function()
+            require("nvim-treesitter.parsers").latex.install_info = {
+                generate = false,
+                url = "https://github.com/Willie169/tree-sitter-latex",
+                location = "tree-sitter-latex",
+            }
+        end,
     })
 end
 
