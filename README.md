@@ -24,13 +24,13 @@ if vim.fn.has("android") == 1 then
 				location = "tree-sitter-latex",
 			}
 		end,
-	})
+    })
 end
 
 return {
-	{
+    {
         "nvim-treesitter/nvim-treesitter",
-         -- your options...
+        -- your options...
     },
 }
 ```
