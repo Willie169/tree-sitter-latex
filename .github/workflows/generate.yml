@@ -1,0 +1,49 @@
+name: generate
+
+on:
+  schedule:
+    - cron: "0 */6 * * *"
+  push:
+    paths:
+      - ".github/workflows/generate.yml"
+      - "commit"
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: generate
+        run: |
+          rm -rf tree-sitter-latex
+          git clone https://github.com/latex-lsp/tree-sitter-latex.git
+          cd tree-sitter-latex
+          if diff --quiet ../commit <(git rev-parse HEAD); then
+            echo "No changes in upstream."
+            exit 0
+          else
+             git rev-parse HEAD > ../commit
+          fi
+          rm -rf .git
+          tree-sitter generate --abi 15 src/grammar.json
+          cd ..
+      - name: Commit and push changes
+        run: |
+          if git diff --quiet && git diff --cached --quiet; then
+            echo "No changes to commit."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "$(date -uIs)"
+          git push
