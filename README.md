@@ -12,20 +12,18 @@ The generated `src/parser.c` is therefore committed to this repository so that n
 
 ### nvim-treesitter Usage
 
-If you are using [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter) in Termux on Android, register this repository as the latex parser:
+If you are using [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter), register this repository as the latex parser. For [folke/lazy.nvim](https://github.com/folke/lazy.nvim):
 ```
-if vim.fn.has("android") == 1 then
-	vim.api.nvim_create_autocmd("User", {
-		pattern = "TSUpdate",
-		callback = function()
-			require("nvim-treesitter.parsers").latex.install_info = {
-				generate = false,
-				url = "https://github.com/Willie169/tree-sitter-latex",
-				location = "tree-sitter-latex",
-			}
-		end,
-	})
-end
+vim.api.nvim_create_autocmd("User", {
+    pattern = "TSUpdate",
+    callback = function()
+        require("nvim-treesitter.parsers").latex.install_info = {
+            generate = false,
+            url = "https://github.com/Willie169/tree-sitter-latex",
+            location = "tree-sitter-latex",
+        }
+    end,
+})
 
 return {
 	{
