@@ -25,7 +25,7 @@ jobs:
       - name: generate
         run: |
           rm -rf tree-sitter-latex
-          git clone https://github.com/latex-lsp/tree-sitter-latex.git
+          git clone --depth=1 https://github.com/latex-lsp/tree-sitter-latex.git
           cd tree-sitter-latex
           if diff --quiet ../commit <(git rev-parse HEAD); then
             echo "No changes in upstream."
