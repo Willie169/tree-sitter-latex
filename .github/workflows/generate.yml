@@ -39,7 +39,7 @@ jobs:
           cd ..
       - name: Commit and push changes
         run: |
-          if git diff --quiet && git diff --cached --quiet; then
+          if [ -z "$(git status --porcelain --untracked-files=all)" ]; then
             echo "No changes to commit."
             exit 0
           fi
