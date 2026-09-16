@@ -27,7 +27,7 @@ jobs:
           rm -rf tree-sitter-latex
           git clone --depth=1 https://github.com/latex-lsp/tree-sitter-latex.git
           cd tree-sitter-latex
-          if diff --quiet ../commit <(git rev-parse HEAD); then
+          if diff -q ../commit <(git rev-parse HEAD); then
             echo "No changes in upstream."
             exit 0
           else
