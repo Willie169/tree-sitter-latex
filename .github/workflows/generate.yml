@@ -21,8 +21,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - uses: tree-sitter/setup-action@v2
-      - name: generate
+      - name: Check
         run: |
           rm -rf tree-sitter-latex
           git clone --depth=1 https://github.com/latex-lsp/tree-sitter-latex.git
@@ -31,12 +30,15 @@ jobs:
             echo "No changes in upstream."
             exit 0
           else
-             git rev-parse HEAD > ../commit
+            git rev-parse HEAD > ../commit
+            rm -rf .git
+            rm .gitignore
           fi
-          rm -rf .git
-          rm .gitignore
-          tree-sitter generate --abi 15 src/grammar.json
-          cd ..
+      - uses: tree-sitter/setup-action@v2
+      - name: Generate
+        run: |
+            tree-sitter generate --abi 15 src/grammar.json
+            cd ..
       - name: Commit and push changes
         run: |
           git config user.name "github-actions[bot]"
