@@ -37,8 +37,8 @@ jobs:
       - uses: tree-sitter/setup-action@v2
       - name: Generate
         run: |
-            tree-sitter generate --abi 15 src/grammar.json
-            cd ..
+          cd tree-sitter-latex
+          tree-sitter generate --abi 15 src/grammar.json
       - name: Commit and push changes
         run: |
           git config user.name "github-actions[bot]"
