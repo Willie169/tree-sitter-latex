@@ -28,18 +28,22 @@ jobs:
           cd tree-sitter-latex
           if diff -q ../commit <(git rev-parse HEAD); then
             echo "No changes in upstream."
-            exit 0
+            echo "donext=0" >> $GITHUB_OUTPUT
           else
             git rev-parse HEAD > ../commit
             rm -rf .git
             rm .gitignore
+            echo "donext=1" >> $GITHUB_OUTPUT
           fi
       - uses: tree-sitter/setup-action@v2
+        if: ( steps.check.outputs.donext == 1 )
       - name: Generate
+        if: ( steps.check.outputs.donext == 1 )
         run: |
           cd tree-sitter-latex
           tree-sitter generate --abi 15 src/grammar.json
       - name: Commit and push changes
+        if: ( steps.check.outputs.donext == 1 )
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
